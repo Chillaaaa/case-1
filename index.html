@@ -2,25 +2,25 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Meta viewport wajib untuk Responsive Web Design (RWD) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
     <title>Mystery Card: Es Teh di Kantin</title>
     <style>
         /* 
-         * PENGATURAN UI UNTUK LOW VISION
-         * Menggunakan palet kontras tinggi (WCAG 2.2 AA/AAA)
-         * Ukuran basis diperbesar untuk keterbacaan maksimal
+         * VARIABEL WARNA & UKURAN (High Contrast & RWD)
          */
         :root {
-            --bg-color: #ffffff;         /* Latar belakang putih bersih */
-            --text-main: #000000;        /* Teks utama hitam pekat */
-            --text-muted: #222222;       /* Teks sekunder abu-abu sangat gelap */
-            --primary: #0044cc;          /* Biru tua untuk elemen interaktif */
-            --primary-hover: #002266;    /* Biru lebih gelap saat hover */
-            --focus-ring: #000000;       /* Outline fokus hitam tegas */
-            --border-color: #777777;     /* Garis pembatas kontras tinggi */
-            --box-bg: #f5f5f5;           /* Latar kotak kontrol abu-abu terang */
+            --bg-color: #ffffff;
+            --text-main: #000000;
+            --text-muted: #222222;
+            --primary: #0044cc;
+            --primary-hover: #002266;
+            --focus-ring: #000000;
+            --border-color: #777777;
+            --box-bg: #f5f5f5;
         }
 
+        /* Tata letak dasar (Desktop/Global) */
         body {
             font-family: Arial, Helvetica, sans-serif;
             background-color: var(--bg-color);
@@ -30,46 +30,52 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            /* Padding global agar card tidak menempel di ujung layar pada HP */
+            padding: clamp(15px, 3vw, 20px); 
             box-sizing: border-box;
             line-height: 1.6;
         }
 
+        /* 
+         * WADAH UTAMA (CARD)
+         * Menggunakan max-width agar tidak melebar berlebihan di Desktop,
+         * namun menggunakan width 100% agar fleksibel di HP/Tablet.
+         */
         .card {
             background-color: var(--bg-color);
-            padding: 40px;
+            /* Padding responsif: kecil di HP, lebih lega di Desktop */
+            padding: clamp(20px, 5vw, 40px);
             border-radius: 12px;
-            max-width: 800px;
             width: 100%;
+            max-width: 800px;
             border: 3px solid var(--border-color);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+            box-sizing: border-box;
         }
 
         header {
             text-align: center;
-            margin-bottom: 30px;
-            padding-bottom: 20px;
+            margin-bottom: clamp(20px, 4vw, 30px);
+            padding-bottom: clamp(15px, 3vw, 20px);
             border-bottom: 3px solid var(--border-color);
         }
 
+        /* Tipografi Responsif menggunakan clamp() (min, ideal, max) */
         h1 {
-            font-size: 2.5rem; /* ~40px */
+            font-size: clamp(1.75rem, 4vw + 1rem, 2.5rem);
             font-weight: 800;
-            color: var(--text-main);
             margin: 0 0 10px 0;
-            text-transform: uppercase;
         }
 
         h2 {
-            font-size: 1.5rem; /* ~24px */
+            font-size: clamp(1.2rem, 3vw + 0.5rem, 1.5rem);
             font-weight: 700;
             color: var(--text-muted);
-            margin: 0 0 20px 0;
-            text-transform: uppercase;
+            margin: 0 0 15px 0;
         }
 
         h3 {
-            font-size: 2.25rem; /* ~36px */
+            font-size: clamp(1.5rem, 4vw + 0.8rem, 2.25rem);
             font-weight: 800;
             color: var(--primary);
             margin: 0;
@@ -77,47 +83,47 @@
 
         p.instruction {
             text-align: center;
-            font-size: 1.375rem; /* ~22px */
+            font-size: clamp(1.1rem, 2vw + 0.5rem, 1.375rem);
             font-weight: 600;
-            margin-bottom: 30px;
-            color: var(--text-main);
+            margin-bottom: clamp(20px, 4vw, 30px);
         }
 
         .status-box {
             background-color: var(--box-bg);
-            padding: 20px;
+            padding: clamp(15px, 3vw, 20px);
             border-radius: 8px;
-            font-size: 1.375rem; /* ~22px */
+            font-size: clamp(1.1rem, 2vw + 0.5rem, 1.375rem);
             font-weight: 700;
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: clamp(20px, 4vw, 30px);
             border: 2px solid var(--border-color);
+            word-wrap: break-word;
         }
         .status-box.error { background-color: #ffeeee; color: #aa0000; border-color: #aa0000; }
         .status-box.ready { background-color: #eeffee; color: #006600; border-color: #006600; }
 
         .progress-section {
-            margin-bottom: 35px;
+            margin-bottom: clamp(25px, 5vw, 35px);
+            width: 100%;
         }
 
         .time-info {
             display: flex;
             justify-content: space-between;
             font-weight: 700;
-            font-size: 1.25rem; /* 20px */
+            font-size: clamp(1rem, 2vw + 0.4rem, 1.25rem);
             margin-bottom: 15px;
-            color: var(--text-main);
         }
 
-        /* Styling Progress Bar lebih tebal & mudah digeser */
+        /* Progress Bar */
         input[type="range"] {
             -webkit-appearance: none;
             appearance: none;
             width: 100%;
             background: transparent;
             cursor: pointer;
+            box-sizing: border-box;
         }
-        
         input[type="range"]::-webkit-slider-runnable-track {
             width: 100%;
             height: 16px;
@@ -125,18 +131,16 @@
             border-radius: 8px;
             border: 2px solid var(--text-main);
         }
-
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
-            height: 40px;
-            width: 40px;
+            height: 36px;
+            width: 36px;
             border-radius: 50%;
             background: var(--text-main);
-            margin-top: -14px;
+            margin-top: -12px;
             border: 4px solid var(--bg-color);
             box-shadow: 0 0 0 2px var(--text-main);
         }
-
         input[type="range"]::-moz-range-track {
             width: 100%;
             height: 16px;
@@ -144,44 +148,45 @@
             border-radius: 8px;
             border: 2px solid var(--text-main);
         }
-
         input[type="range"]::-moz-range-thumb {
-            height: 40px;
-            width: 40px;
+            height: 36px;
+            width: 36px;
             border-radius: 50%;
             background: var(--text-main);
             border: 4px solid var(--bg-color);
             box-shadow: 0 0 0 2px var(--text-main);
         }
 
+        /* Kontrol Audio (Putar/Jeda) */
         .controls-main {
             display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-bottom: 35px;
-            flex-wrap: wrap;
+            gap: clamp(15px, 3vw, 25px);
+            margin-bottom: clamp(25px, 5vw, 35px);
+            width: 100%;
         }
 
         button {
             background-color: var(--primary);
             color: #ffffff;
             border: 3px solid var(--primary);
-            padding: 20px 32px;
-            font-size: 1.5rem; /* 24px */
+            padding: clamp(15px, 3vw, 20px) clamp(20px, 4vw, 32px);
+            font-size: clamp(1.2rem, 2.5vw + 0.5rem, 1.5rem);
             font-weight: 800;
             border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 12px;
             transition: all 0.2s ease-in-out;
+            width: 100%;
+            box-sizing: border-box;
         }
 
-        button:hover {
+        button:hover:not(:disabled) {
             background-color: var(--primary-hover);
             border-color: var(--primary-hover);
         }
-
         button:disabled {
             background-color: #777777;
             border-color: #777777;
@@ -189,53 +194,92 @@
             cursor: not-allowed;
         }
 
+        /* Kontrol Sekunder (Ulangi & Kecepatan) */
         .controls-secondary {
             display: flex;
-            justify-content: space-between;
-            align-items: center;
             flex-wrap: wrap;
-            gap: 25px;
+            gap: clamp(15px, 3vw, 25px);
             background: var(--box-bg);
-            padding: 25px;
+            padding: clamp(15px, 4vw, 25px);
             border-radius: 12px;
             border: 2px solid var(--border-color);
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        /* Pengaturan agar tombol Ulangi tidak 100% di layar besar */
+        .controls-secondary button {
+            flex: 1 1 auto;
+            width: auto;
         }
 
         .speed-control {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            flex-wrap: wrap;
+            flex-direction: column;
+            gap: 10px;
+            flex: 1 1 100%;
         }
-
         .speed-control label {
-            font-size: 1.375rem; /* 22px */
+            font-size: clamp(1.1rem, 2vw + 0.5rem, 1.375rem);
             font-weight: 800;
-            color: var(--text-main);
         }
-
         select {
-            padding: 15px 20px;
-            font-size: 1.25rem; /* 20px */
+            width: 100%;
+            padding: 15px;
+            font-size: clamp(1.1rem, 2vw + 0.4rem, 1.25rem);
             font-weight: 700;
             color: var(--text-main);
             border-radius: 8px;
             border: 3px solid var(--border-color);
             background-color: #ffffff;
             cursor: pointer;
+            box-sizing: border-box;
         }
 
-        /* Focus styles for Accessibility & Keyboard Navigation */
+        /* Fokus Keyboard */
         button:focus, 
         input[type="range"]:focus, 
         select:focus {
             outline: 5px solid var(--focus-ring);
             outline-offset: 4px;
-            background-color: #ffffe0; /* Memberikan efek highlight ringan saat fokus */
+            background-color: #ffffe0;
         }
-        
-        button:focus {
-            color: #000000;
+        button:focus { color: #000000; }
+
+        /* 
+         * MEDIA QUERIES
+         * Mengatur tata letak spesifik berdasarkan lebar layar
+         */
+
+        /* Untuk Tablet dan Desktop (Layar >= 600px) */
+        @media (min-width: 600px) {
+            .controls-main {
+                justify-content: center;
+            }
+            .controls-main button {
+                width: auto; /* Tombol menyesuaikan isi konten, tidak selebar layar */
+                min-width: 200px;
+            }
+            .controls-secondary {
+                justify-content: space-between;
+                align-items: center;
+            }
+            .speed-control {
+                flex-direction: row;
+                align-items: center;
+                flex: 0 1 auto;
+                width: auto;
+            }
+            select {
+                width: auto; /* Dropdown tidak memanjang 100% pada layar besar */
+            }
+        }
+
+        /* Penyesuaian tata letak untuk HP sangat sempit (Layar <= 360px) */
+        @media (max-width: 360px) {
+            .controls-secondary button {
+                width: 100%; /* Tombol ulangi mengambil baris penuh agar tidak terjepit */
+            }
         }
     </style>
 </head>
@@ -254,7 +298,6 @@
             Memuat file audio...
         </div>
 
-        <!-- Audio Element (Menggunakan file MP3 yang sama) -->
         <audio id="audio-player" src="luvvoice.com-20261113-idaIQs.mp3" preload="metadata"></audio>
 
         <div class="progress-section">
@@ -262,13 +305,11 @@
                 <span id="current-time">00:00</span>
                 <span id="duration-time">00:00</span>
             </div>
-            <!-- Progress Bar ditebalkan dan area sentuh diperbesar -->
             <input type="range" id="progress-bar" value="0" min="0" step="1" 
                    aria-label="Geser untuk berpindah posisi audio. Waktu saat ini: 0 detik.">
         </div>
 
         <div class="controls-main">
-            <!-- Teks tombol diperbesar, kontras tinggi -->
             <button id="btn-play" aria-label="Putar Audio" disabled>
                 <span aria-hidden="true">▶</span> PUTAR
             </button>
@@ -307,7 +348,6 @@
             const speedSelect = document.getElementById('speed-select');
             const statusBox = document.getElementById('status');
 
-            // Format waktu menjadi MM:SS
             function formatTime(seconds) {
                 if (isNaN(seconds)) return "00:00";
                 const m = Math.floor(seconds / 60);
@@ -315,36 +355,28 @@
                 return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             }
 
-            // Saat metadata audio berhasil dimuat
             audio.addEventListener('loadedmetadata', () => {
                 durationTimeEl.textContent = formatTime(audio.duration);
                 progressBar.max = Math.floor(audio.duration);
-                
                 statusBox.textContent = "Audio siap diputar.";
                 statusBox.className = "status-box ready";
-                
                 playBtn.disabled = false;
                 restartBtn.disabled = false;
             });
 
-            // Saat audio gagal dimuat
             audio.addEventListener('error', () => {
                 statusBox.textContent = "Gagal memuat audio. Pastikan file 'luvvoice.com-20261113-idaIQs.mp3' berada di folder yang sama.";
                 statusBox.className = "status-box error";
             });
 
-            // Perbarui indikator waktu dan progress bar
             audio.addEventListener('timeupdate', () => {
                 const current = Math.floor(audio.currentTime);
                 currentTimeEl.textContent = formatTime(current);
                 progressBar.value = current;
-                
-                // Perbarui label pembaca layar
                 progressBar.setAttribute('aria-valuenow', current);
                 progressBar.setAttribute('aria-label', `Posisi audio: ${current} detik dari total ${Math.floor(audio.duration)} detik`);
             });
 
-            // Saat audio selesai
             audio.addEventListener('ended', () => {
                 playBtn.style.display = "flex";
                 pauseBtn.style.display = "none";
@@ -353,7 +385,6 @@
                 statusBox.textContent = "Pemutaran selesai.";
             });
 
-            // Tombol Putar
             playBtn.addEventListener('click', () => {
                 audio.play().then(() => {
                     playBtn.style.display = "none";
@@ -365,7 +396,6 @@
                 });
             });
 
-            // Tombol Jeda
             pauseBtn.addEventListener('click', () => {
                 audio.pause();
                 pauseBtn.style.display = "none";
@@ -374,7 +404,6 @@
                 statusBox.textContent = "Audio dijeda.";
             });
 
-            // Tombol Ulangi
             restartBtn.addEventListener('click', () => {
                 audio.currentTime = 0;
                 if (audio.paused) {
@@ -386,12 +415,10 @@
                 statusBox.textContent = "Audio diputar ulang dari awal.";
             });
 
-            // Progress Bar Digeser
             progressBar.addEventListener('input', () => {
                 audio.currentTime = progressBar.value;
             });
 
-            // Pengaturan Kecepatan
             speedSelect.addEventListener('change', (e) => {
                 audio.playbackRate = parseFloat(e.target.value);
                 const selectedText = e.target.options[e.target.selectedIndex].text;
