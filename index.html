@@ -5,19 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mystery Card: Es Teh di Kantin</title>
     <style>
+        /* 
+         * PENGATURAN UI UNTUK LOW VISION
+         * Menggunakan palet kontras tinggi (WCAG 2.2 AA/AAA)
+         * Ukuran basis diperbesar untuk keterbacaan maksimal
+         */
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-main: #1a1a1a;
-            --text-muted: #595959;
-            --primary: #0056b3;
-            --primary-hover: #004494;
-            --focus-ring: #ffc107;
-            --border-color: #d1d5db;
+            --bg-color: #ffffff;         /* Latar belakang putih bersih */
+            --text-main: #000000;        /* Teks utama hitam pekat */
+            --text-muted: #222222;       /* Teks sekunder abu-abu sangat gelap */
+            --primary: #0044cc;          /* Biru tua untuk elemen interaktif */
+            --primary-hover: #002266;    /* Biru lebih gelap saat hover */
+            --focus-ring: #000000;       /* Outline fokus hitam tegas */
+            --border-color: #777777;     /* Garis pembatas kontras tinggi */
+            --box-bg: #f5f5f5;           /* Latar kotak kontrol abu-abu terang */
         }
 
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            font-family: Arial, Helvetica, sans-serif;
             background-color: var(--bg-color);
             color: var(--text-main);
             display: flex;
@@ -31,104 +36,156 @@
         }
 
         .card {
-            background-color: var(--card-bg);
-            padding: 30px;
+            background-color: var(--bg-color);
+            padding: 40px;
             border-radius: 12px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
-            max-width: 500px;
+            max-width: 800px;
             width: 100%;
-            border: 1px solid var(--border-color);
+            border: 3px solid var(--border-color);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
         }
 
         header {
             text-align: center;
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid var(--border-color);
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 3px solid var(--border-color);
         }
 
         h1 {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            margin: 0 0 5px 0;
+            font-size: 2.5rem; /* ~40px */
+            font-weight: 800;
+            color: var(--text-main);
+            margin: 0 0 10px 0;
             text-transform: uppercase;
         }
 
         h2 {
-            font-size: 1.1rem;
-            color: var(--primary);
-            margin: 0 0 15px 0;
+            font-size: 1.5rem; /* ~24px */
+            font-weight: 700;
+            color: var(--text-muted);
+            margin: 0 0 20px 0;
+            text-transform: uppercase;
         }
 
         h3 {
-            font-size: 1.8rem;
-            color: var(--text-main);
+            font-size: 2.25rem; /* ~36px */
+            font-weight: 800;
+            color: var(--primary);
             margin: 0;
         }
 
         p.instruction {
             text-align: center;
-            font-size: 1.05rem;
-            margin-bottom: 20px;
+            font-size: 1.375rem; /* ~22px */
+            font-weight: 600;
+            margin-bottom: 30px;
+            color: var(--text-main);
         }
 
         .status-box {
-            background-color: #e2e8f0;
-            padding: 12px;
+            background-color: var(--box-bg);
+            padding: 20px;
             border-radius: 8px;
-            font-weight: 600;
+            font-size: 1.375rem; /* ~22px */
+            font-weight: 700;
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            border: 2px solid var(--border-color);
         }
-        .status-box.error { background-color: #fee2e2; color: #991b1b; }
-        .status-box.ready { background-color: #dcfce7; color: #166534; }
+        .status-box.error { background-color: #ffeeee; color: #aa0000; border-color: #aa0000; }
+        .status-box.ready { background-color: #eeffee; color: #006600; border-color: #006600; }
 
         .progress-section {
-            margin-bottom: 25px;
+            margin-bottom: 35px;
         }
 
         .time-info {
             display: flex;
             justify-content: space-between;
-            font-weight: bold;
-            font-size: 1rem;
-            margin-bottom: 8px;
+            font-weight: 700;
+            font-size: 1.25rem; /* 20px */
+            margin-bottom: 15px;
+            color: var(--text-main);
         }
 
+        /* Styling Progress Bar lebih tebal & mudah digeser */
         input[type="range"] {
+            -webkit-appearance: none;
+            appearance: none;
             width: 100%;
-            height: 24px;
+            background: transparent;
             cursor: pointer;
+        }
+        
+        input[type="range"]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 16px;
+            background: #cccccc;
+            border-radius: 8px;
+            border: 2px solid var(--text-main);
+        }
+
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: var(--text-main);
+            margin-top: -14px;
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 2px var(--text-main);
+        }
+
+        input[type="range"]::-moz-range-track {
+            width: 100%;
+            height: 16px;
+            background: #cccccc;
+            border-radius: 8px;
+            border: 2px solid var(--text-main);
+        }
+
+        input[type="range"]::-moz-range-thumb {
+            height: 40px;
+            width: 40px;
+            border-radius: 50%;
+            background: var(--text-main);
+            border: 4px solid var(--bg-color);
+            box-shadow: 0 0 0 2px var(--text-main);
         }
 
         .controls-main {
             display: flex;
             justify-content: center;
-            gap: 15px;
-            margin-bottom: 20px;
+            gap: 25px;
+            margin-bottom: 35px;
+            flex-wrap: wrap;
         }
 
         button {
             background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 14px 24px;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
+            color: #ffffff;
+            border: 3px solid var(--primary);
+            padding: 20px 32px;
+            font-size: 1.5rem; /* 24px */
+            font-weight: 800;
+            border-radius: 12px;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+            transition: all 0.2s ease-in-out;
         }
 
         button:hover {
             background-color: var(--primary-hover);
+            border-color: var(--primary-hover);
         }
 
         button:disabled {
-            background-color: #9ca3af;
+            background-color: #777777;
+            border-color: #777777;
+            color: #eeeeee;
             cursor: not-allowed;
         }
 
@@ -137,32 +194,48 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
+            gap: 25px;
+            background: var(--box-bg);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+        }
+
+        .speed-control {
+            display: flex;
+            align-items: center;
             gap: 15px;
-            background: #f8fafc;
-            padding: 15px;
-            border-radius: 8px;
-            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
         }
 
         .speed-control label {
-            font-weight: bold;
-            margin-right: 8px;
+            font-size: 1.375rem; /* 22px */
+            font-weight: 800;
+            color: var(--text-main);
         }
 
         select {
-            padding: 10px;
-            font-size: 1rem;
-            font-weight: bold;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
+            padding: 15px 20px;
+            font-size: 1.25rem; /* 20px */
+            font-weight: 700;
+            color: var(--text-main);
+            border-radius: 8px;
+            border: 3px solid var(--border-color);
+            background-color: #ffffff;
+            cursor: pointer;
         }
 
-        /* Focus styles for Accessibility */
+        /* Focus styles for Accessibility & Keyboard Navigation */
         button:focus, 
         input[type="range"]:focus, 
         select:focus {
-            outline: 4px solid var(--focus-ring);
-            outline-offset: 2px;
+            outline: 5px solid var(--focus-ring);
+            outline-offset: 4px;
+            background-color: #ffffe0; /* Memberikan efek highlight ringan saat fokus */
+        }
+        
+        button:focus {
+            color: #000000;
         }
     </style>
 </head>
@@ -170,18 +243,18 @@
 
     <main class="card">
         <header>
-            <h1>Mystery Card</h1>
+            <h1>MYSTERY CARD</h1>
             <h2>HUKUM PERMINTAAN DAN PENAWARAN</h2>
-            <h3>Kasus: Es Teh di Kantin</h3>
+            <h3>ES TEH DI KANTIN</h3>
         </header>
 
         <p class="instruction">Tekan tombol Putar di bawah ini untuk mendengarkan pembacaan teks kasus.</p>
 
-        <div id="status" class="status-box" role="status" aria-live="polite">
+        <div id="status" class="status-box" role="status" aria-live="assertive">
             Memuat file audio...
         </div>
 
-        <!-- Audio Element (Hidden from visual, manipulated via JS) -->
+        <!-- Audio Element (Menggunakan file MP3 yang sama) -->
         <audio id="audio-player" src="luvvoice.com-20261113-idaIQs.mp3" preload="metadata"></audio>
 
         <div class="progress-section">
@@ -189,32 +262,34 @@
                 <span id="current-time">00:00</span>
                 <span id="duration-time">00:00</span>
             </div>
+            <!-- Progress Bar ditebalkan dan area sentuh diperbesar -->
             <input type="range" id="progress-bar" value="0" min="0" step="1" 
                    aria-label="Geser untuk berpindah posisi audio. Waktu saat ini: 0 detik.">
         </div>
 
         <div class="controls-main">
+            <!-- Teks tombol diperbesar, kontras tinggi -->
             <button id="btn-play" aria-label="Putar Audio" disabled>
-                <span aria-hidden="true">▶</span> Putar
+                <span aria-hidden="true">▶</span> PUTAR
             </button>
             <button id="btn-pause" aria-label="Jeda Audio" style="display: none;">
-                <span aria-hidden="true">⏸</span> Jeda
+                <span aria-hidden="true">⏸</span> JEDA
             </button>
         </div>
 
         <div class="controls-secondary">
             <button id="btn-restart" aria-label="Ulangi audio dari awal" disabled>
-                <span aria-hidden="true">⏮</span> Ulangi
+                <span aria-hidden="true">⏮</span> ULANGI
             </button>
             
             <div class="speed-control">
                 <label for="speed-select">Kecepatan:</label>
                 <select id="speed-select" aria-label="Pilih kecepatan putar audio">
-                    <option value="0.75">0.75x</option>
+                    <option value="0.75">0.75x (Lambat)</option>
                     <option value="1" selected>1x (Normal)</option>
-                    <option value="1.25">1.25x</option>
-                    <option value="1.5">1.5x</option>
-                    <option value="2">2x</option>
+                    <option value="1.25">1.25x (Sedang)</option>
+                    <option value="1.5">1.5x (Cepat)</option>
+                    <option value="2">2x (Sangat Cepat)</option>
                 </select>
             </div>
         </div>
@@ -232,7 +307,7 @@
             const speedSelect = document.getElementById('speed-select');
             const statusBox = document.getElementById('status');
 
-            // Format time in MM:SS
+            // Format waktu menjadi MM:SS
             function formatTime(seconds) {
                 if (isNaN(seconds)) return "00:00";
                 const m = Math.floor(seconds / 60);
@@ -240,7 +315,7 @@
                 return `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
             }
 
-            // Audio Metadata Loaded
+            // Saat metadata audio berhasil dimuat
             audio.addEventListener('loadedmetadata', () => {
                 durationTimeEl.textContent = formatTime(audio.duration);
                 progressBar.max = Math.floor(audio.duration);
@@ -252,32 +327,33 @@
                 restartBtn.disabled = false;
             });
 
-            // Handle Error
+            // Saat audio gagal dimuat
             audio.addEventListener('error', () => {
-                statusBox.textContent = "Gagal memuat audio. Pastikan file 'luvvoice.com-20261113-idaIQs.mp3' berada di folder yang sama dengan file HTML ini.";
+                statusBox.textContent = "Gagal memuat audio. Pastikan file 'luvvoice.com-20261113-idaIQs.mp3' berada di folder yang sama.";
                 statusBox.className = "status-box error";
             });
 
-            // Time Update (Sync progress bar and text)
+            // Perbarui indikator waktu dan progress bar
             audio.addEventListener('timeupdate', () => {
                 const current = Math.floor(audio.currentTime);
                 currentTimeEl.textContent = formatTime(current);
                 progressBar.value = current;
                 
-                // Update ARIA label for screen readers
+                // Perbarui label pembaca layar
                 progressBar.setAttribute('aria-valuenow', current);
                 progressBar.setAttribute('aria-label', `Posisi audio: ${current} detik dari total ${Math.floor(audio.duration)} detik`);
             });
 
-            // Audio Ended
+            // Saat audio selesai
             audio.addEventListener('ended', () => {
                 playBtn.style.display = "flex";
                 pauseBtn.style.display = "none";
                 audio.currentTime = 0;
                 playBtn.focus();
+                statusBox.textContent = "Pemutaran selesai.";
             });
 
-            // Play Button
+            // Tombol Putar
             playBtn.addEventListener('click', () => {
                 audio.play().then(() => {
                     playBtn.style.display = "none";
@@ -289,7 +365,7 @@
                 });
             });
 
-            // Pause Button
+            // Tombol Jeda
             pauseBtn.addEventListener('click', () => {
                 audio.pause();
                 pauseBtn.style.display = "none";
@@ -298,7 +374,7 @@
                 statusBox.textContent = "Audio dijeda.";
             });
 
-            // Restart Button
+            // Tombol Ulangi
             restartBtn.addEventListener('click', () => {
                 audio.currentTime = 0;
                 if (audio.paused) {
@@ -310,15 +386,16 @@
                 statusBox.textContent = "Audio diputar ulang dari awal.";
             });
 
-            // Seek (Progress Bar)
+            // Progress Bar Digeser
             progressBar.addEventListener('input', () => {
                 audio.currentTime = progressBar.value;
             });
 
-            // Speed Control
+            // Pengaturan Kecepatan
             speedSelect.addEventListener('change', (e) => {
                 audio.playbackRate = parseFloat(e.target.value);
-                statusBox.textContent = `Kecepatan diubah menjadi ${e.target.value} kali.`;
+                const selectedText = e.target.options[e.target.selectedIndex].text;
+                statusBox.textContent = `Kecepatan diubah menjadi ${selectedText}.`;
             });
         });
     </script>
